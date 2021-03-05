@@ -1,10 +1,3 @@
-type Post = {
-  title: string,
-  url: string,
-  points: string,
-  author: string,
-  time: string,
-  comments: string,
-}
+import { PostInterface } from 'src/interfaces';
 
-export const posts: Post[] = [];
+export const posts: PostInterface[] = [];
