@@ -1,8 +1,8 @@
 export interface PostInterface {
   title: string,
   url: string,
-  points: string,
+  points: number,
   author: string,
   time: string,
-  comments: string,
+  comments: number,
 }

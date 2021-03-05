@@ -30,8 +30,8 @@ export interface NexusGenScalars {
 export interface NexusGenObjects {
   Post: { // root type
     author?: string | null; // String
-    comments?: string | null; // String
-    points?: string | null; // String
+    comments?: number | null; // Int
+    points?: number | null; // Int
     time?: string | null; // String
     title?: string | null; // String
     url?: string | null; // String
@@ -52,8 +52,8 @@ export type NexusGenAllTypes = NexusGenRootTypes & NexusGenScalars
 export interface NexusGenFieldTypes {
   Post: { // field return type
     author: string | null; // String
-    comments: string | null; // String
-    points: string | null; // String
+    comments: number | null; // Int
+    points: number | null; // Int
     time: string | null; // String
     title: string | null; // String
     url: string | null; // String
@@ -66,8 +66,8 @@ export interface NexusGenFieldTypes {
 export interface NexusGenFieldTypeNames {
   Post: { // field return type name
     author: 'String'
-    comments: 'String'
-    points: 'String'
+    comments: 'Int'
+    points: 'Int'
     time: 'String'
     title: 'String'
     url: 'String'

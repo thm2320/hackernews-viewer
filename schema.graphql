@@ -4,8 +4,8 @@
 
 type Post {
   author: String
-  comments: String
-  points: String
+  comments: Int
+  points: Int
   time: String
   title: String
   url: String

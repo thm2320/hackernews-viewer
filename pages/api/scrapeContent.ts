@@ -2,6 +2,10 @@ import puppeteer from 'puppeteer';
 import cheerio from 'cheerio';
 import { posts } from 'src/data/posts';
 
+const extractNum = (str): number => {
+  const num = str ? str.match(/\d+/)[0] : 0;
+  return +num;
+}
 
 const scrapeContent = async () => {
   const browser: puppeteer.Browser = await puppeteer.launch();
@@ -15,10 +19,10 @@ const scrapeContent = async () => {
     const url = $(el).children('.title').children('.storylink').attr('href');
 
     const subtextEl = $(el).next().children('.subtext');
-    const points = $(subtextEl).children('.score').text();
+    const points = extractNum($(subtextEl).children('.score').text());
     const author = $(subtextEl).children('.hnuser').text();
     const time = $(subtextEl).children('.age').text();
-    const comments = $(subtextEl).children('a:contains("comment")').text();
+    const comments = extractNum($(subtextEl).children('a:contains("comment")').text());
 
     posts.push({
       title,

@@ -5,9 +5,9 @@ export const Post = objectType({
   definition(t) {
     t.string("title");
     t.string("url");
-    t.string("points");
+    t.int("points");
     t.string("author");
     t.string("time");
-    t.string("comments");
+    t.int("comments");
   }
 })
