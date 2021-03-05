@@ -6,7 +6,9 @@ export const Query = queryType({
   definition(t) {
     t.list.field("posts", {
       type: Post,
-      resolve: () => posts
+      resolve: () => [...posts].sort((a, b) => {
+        return b.comments - a.comments;
+      })
     });
   },
 });
