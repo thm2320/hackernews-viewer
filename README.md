@@ -1,34 +1,43 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Introduction of this project
 
-First, run the development server:
+- To learn backend server and frontend UI with Next.js
+- Build graphql api with Apollo Server
+- Use Puppeteer and Cheerio to scrape content from Hackernews (https://news.ycombinator.com/news)
 
-```bash
+## Instruction to start at local development server
+
+1. run following cmd:
+
+```
+git clone https://github.com/thm2320/hackernews-viewer.git
+cd hackernews-viewer
+npm install
 npm run dev
-# or
-yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. open http://localhost:3000/api/graphql/ . It will show graphql playground.
+1. open http://localhost:3000/ . It will show the Page displaying hackernews posts in cards list
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## How it works
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+1. Nexus is used to build the graphql schema using code first approach
+1. Apollo Server will serve as graphql api
+1. Every time Apollo Client queries the api, it will start scraping content from Hackernews
+1. Puppeteer will scrape the html content and Cheerio will load the content and extract the required data
+1. The data will be stored in memory with an Array of "Post" Type which can fit the graphql schema. And the list will be sorted by comments in descending order
+1. The frontend page will render the data using React and Material UI
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Known issues and possible improvement
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+| Item         | Description                                                                                                                                                                                                                                                                                                                                                                                                          |
+| ------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Problem:     | The cards showing in the UI are just first 30 news in hackernews.                                                                                                                                                                                                                                                                                                                                                    |
+| Improvement: | `It is possible to do the scraping simultaneously for different pages in hackernews with an async method. And use promise to group all news. So that it is possible to display more than 30 news`                                                                                                                                                                                                                    |
+| Problem:     | The api response time is quite slow due to the scraping process. And it is possible to duplicate the scraping process if users do the query concurrently.                                                                                                                                                                                                                                                            |
+| Improvement: | `The problems can be solved by using event bus and cache system. Event bus can queue up the scraping request and scraping service will only start one process for multiple requests. And cache system can store the news so that reduce the frequency to request hackernews. It can speed up the request and prevent the heavy processing on scraping. Some open source project like "Redis" can serve this purpose` |
+| Problem:     | The comments cannot be read in the site.                                                                                                                                                                                                                                                                                                                                                                             |
+| Improvement: | `A comments page can be implemented in the UI. It can display the comments by scraping`                                                                                                                                                                                                                                                                                                                              |
+| Problem:     | The source content are based on the html content from hackernews. If the html structure is changed by hackernews. The data display in the site will be incorrect.                                                                                                                                                                                                                                                    |
+| Improvement: | `Try to request the hackernews api to get the data instead of scraping`                                                                                                                                                                                                                                                                                                                                              |
