@@ -1,6 +1,7 @@
 import { useQuery, gql } from "@apollo/client";
-import { Grid, Card, CardContent, Typography, Container, Link } from "@material-ui/core";
+import { Grid, Card, CardContent, Typography, Container, CircularProgress } from "@material-ui/core";
 import { makeStyles } from '@material-ui/core/styles';
+import ErrorPage from 'next/error'
 
 const PostQuery = gql`
   query {
@@ -11,7 +12,7 @@ const PostQuery = gql`
       author,
       time,
       comments,
-      points
+      points,
     }
   }
 `;
@@ -47,8 +48,19 @@ export default function Home() {
   const { data, error, loading } = useQuery(PostQuery);
   const classes = useStyles();
 
+  if (error) {
+    return < ErrorPage statusCode={500} />
+  }
+
   if (loading) {
-    return <div>Loading</div>
+    return (
+      <Grid container justify="center">
+        <Typography>
+          Loading Post from Hacker News...
+        </Typography>
+        <CircularProgress />
+      </Grid>
+    )
   }
 
   return (
